@@ -5,14 +5,20 @@ const Calculator = () => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
 
-  const handleClick = (value) => {
+const handleClick = (value) => {
   if (value === '=') {
+    const trimmedInput = input.trim();
+    if (
+      trimmedInput === '' ||
+      /[+\-*/.]$/.test(trimmedInput) ||
+      /[^0-9+\-*/.]/.test(trimmedInput)
+    ) {
+      setResult('Error'); 
+      return;
+    }
+
     try {
-      if (input.trim() === '' || /[+\-*/]$/.test(input)) {
-        setResult('Incomplete');
-      } else {
-        setResult(eval(input));
-      }
+      setResult(eval(trimmedInput));
     } catch {
       setResult('Error');
     }
