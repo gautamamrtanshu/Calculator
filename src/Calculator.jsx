@@ -6,19 +6,23 @@ const Calculator = () => {
   const [result, setResult] = useState('');
 
   const handleClick = (value) => {
-    if (value === '=') {
-      try {
+  if (value === '=') {
+    try {
+      if (input.trim() === '' || /[+\-*/]$/.test(input)) {
+        setResult('Incomplete');
+      } else {
         setResult(eval(input));
-      } catch {
-        setResult('Error');
       }
-    } else if (value === 'C') {
-      setInput('');
-      setResult('');
-    } else {
-      setInput(input + value);
+    } catch {
+      setResult('Error');
     }
-  };
+  } else if (value === 'C') {
+    setInput('');
+    setResult('');
+  } else {
+    setInput(input + value);
+  }
+};
 
   return (
     <div className="calculator">
